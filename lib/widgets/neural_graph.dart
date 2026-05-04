@@ -34,7 +34,7 @@ class _GraphPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (points.isEmpty) return;
 
-    final double spacing = size.width / 149;
+    final double spacing = size.width / (points.length > 1 ? points.length - 1 : 1);
     
     double getY(double val) {
       double pos = size.height - (val / graphMax * size.height);

@@ -528,14 +528,24 @@ class NeuralController extends ChangeNotifier {
   double distanceThreshold = 1.0;
   bool isTrackingActive = false;
 
+  int graphMemory = 300; 
+
+  void setGraphMemory(double value) {
+    graphMemory = value.toInt();
+    if (points.length > graphMemory) {
+      points = points.sublist(points.length - graphMemory);
+    }
+    notifyListeners();
+  }
+
   NeuralController(this._service) {
     loadSettings(); 
     loadDictionaries();
-    points = List.generate(50, (index) => 0.0);
+    points = List.generate(graphMemory, (index) => 0.0);
 
     _service.signalStream.listen((value) {
       points.add(value);
-      if (points.length > 50) {
+      if (points.length > graphMemory) {
         points.removeAt(0);
       }
       _checkThreshold(value);

@@ -404,8 +404,45 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              const SizedBox(height: 20), 
+              const SizedBox(height: 5),
 
+              // --- GRAPH SPEED (MEMORY) SLIDER ---
+              Opacity(
+                opacity: 0.5,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    children: [
+                      Text("Speed", style: TextStyle(color: isDark ? Colors.white : Colors.black, fontSize: 10)),
+                      Expanded(
+                        child: Consumer<NeuralController>(
+                          builder: (context, ctrl, _) => SliderTheme(
+                            data: SliderThemeData(
+                              trackHeight: 2.0,
+                              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 5.0),
+                              overlayShape: const RoundSliderOverlayShape(overlayRadius: 10.0),
+                              activeTrackColor: const Color(0xFF007AFF),
+                              inactiveTrackColor: isDark ? Colors.white24 : Colors.black12,
+                              thumbColor: const Color(0xFF007AFF),
+                            ),
+                            child: Slider(
+                              value: ctrl.graphMemory.toDouble(),
+                              min: 50.0,
+                              max: 600.0,
+                              onChanged: (val) => ctrl.setGraphMemory(val),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Consumer<NeuralController>(
+                        builder: (context, ctrl, _) => Text("${ctrl.graphMemory}", style: TextStyle(color: isDark ? Colors.white : Colors.black, fontSize: 10)),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 5),
               // --- CONTROLLER BOX ---
               Expanded(
                 flex: 4, 
